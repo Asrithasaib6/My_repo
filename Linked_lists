@@ -1,0 +1,567 @@
+Linked Lists:
+
+-> Unlike arrays , Linkedlists dont store elements in contiguos memory locations.
+-> Linkedlist is a linear data structure where nodes are connected using pointers
+
+Dynamic in size : Can grow or shrink in size at runtime without reallocating memory like arrays.
+Efficient insertion or deletion
+Sequential access :You must traverse from the start to reach a particular node (no direct indexing like arrays).	
+
+
+
+REAL WORLD EXAMPLES:
+Real-World Example: Music Player
+Imagine you’re listening to songs in a playlist:
+
+Each song is a node.
+
+The playlist is a doubly linked list:
+
+Each node has a pointer to the next song and the previous song.
+
+When you hit Next, you follow the next pointer.
+
+When you hit Previous, you follow the prev pointer.
+
+This way, you can move back and forth seamlessly without needing to know the index of the song (like you would in an array).
+
+🌐 Web Browser Navigation
+Browsers use a doubly linked list to manage history.
+
+Each page visited is a node:
+
+next → the page you go forward to.
+
+prev → the page you came from.
+
+Clicking Back or Forward is just following these pointers.
+
+*******************************************SINGLE LINKED LIST:************************************************
+
+#include<iostream>
+using namespace std;
+struct Node
+{
+    int data;
+    Node* next;
+    Node(int val)
+    {
+        data=val;
+        next=nullptr;
+    }
+};
+Node* ArrayToLinkedList(int arr[],int size)
+{
+    if(size==0)
+    {
+        return nullptr;
+    }
+    Node* head=new Node(arr[0]);
+    Node* current=head;
+    for(int i=1;i<size;i++)
+    {
+        Node* newnode=new Node(arr[i]);
+        current->next=newnode;
+        current=newnode;
+    }
+    return head;
+}
+Node* insertAtHead(Node* head,int data)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        head=newnode;
+        return head;
+    }
+    newnode->next=head;
+    head=newnode;
+    return head;
+}
+Node* insertAtEnd(Node* head,int data)
+{
+    Node* newnode=new Node(data);
+    Node* temp=head;
+    while(temp->next)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    return head;
+}
+Node* insertAtPosition(Node*head,int data,int pos)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        head=newnode;
+        return head;
+    }
+    if(pos==1)
+    {
+        newnode->next=head;
+        head=newnode;
+        return head;
+    }
+    Node* temp=head;
+    int count=1;
+    while(temp!=nullptr && count<pos-1)
+    {
+        temp=temp->next;
+        count++;
+    }
+    if(temp!=nullptr)
+    {
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+    return head;
+}
+Node* removeHead(Node* head)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    Node* temp=head;
+    head=head->next;
+    delete temp;
+    return head;
+}
+Node* removeTail(Node* head)
+{
+    Node* temp=head;
+    while(temp->next->next!=nullptr)
+    {
+        temp=temp->next;
+    }
+    temp->next=nullptr;
+    return head;
+}
+Node* removeAtPosition(Node* head,int pos)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(pos==1)
+    {
+        Node* temp=head;
+        head=head->next;
+        delete temp;
+        return head;
+    }
+    else
+    {
+        Node* temp=head;
+        Node* prev=nullptr;
+        int count=1;
+        while(temp!=nullptr && count<pos)
+        {
+            prev=temp;
+            temp=temp->next;
+            count++;
+        }
+        if(temp!=nullptr)
+        {
+            prev->next=prev->next->next;
+        }
+    }
+    return head;
+}
+void printList(Node* head)
+{
+    Node* temp=head;
+    while(temp)
+    {
+        cout<<temp->data<<endl;
+        temp=temp->next;
+    }
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int size=sizeof(arr)/sizeof(arr[0]);
+    Node* head=ArrayToLinkedList(arr,size);
+    head=insertAtHead(head,10);
+    head=insertAtEnd(head,50);
+    head=insertAtPosition(head,15,2);
+    //head=removeHead(head);
+    //head=removeTail(head);
+    head=removeAtPosition(head,9);
+    printList(head);
+}
+****************************************************DOUBLE LINKED LIST**************************************************
+#include<iostream>
+using namespace std;
+struct Node
+{
+    int data;
+    Node* prev;
+    Node* next;
+    Node(int val)
+    {
+        data=val;
+        prev=nullptr;
+        next=nullptr;
+    }
+};
+Node* ArrayToLinkedList(int arr[],int size)
+{
+    if(size==0)
+    {
+        return nullptr;
+    }
+    Node* head=new Node(arr[0]);
+    Node* current=head;
+    for(int i=1;i<size;i++)
+    {
+        Node* newnode=new Node(arr[i]);
+        current->next=newnode;
+        newnode->prev=current;
+        current=newnode;
+    }
+    return head;
+}
+Node* insertAtHead(Node* head,int data)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    Node* newnode=new Node(data);
+    newnode->next=head;
+    head->prev=newnode;
+    head=newnode;
+    return head;
+}
+Node* insertAtEnd(Node* head,int data)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    Node* temp=head;
+    Node* newnode=new Node(data);
+    while(temp->next!=nullptr)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    newnode->prev=temp;
+    return head;
+}
+Node* insertAtPosition(Node* head,int data,int pos)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(pos==1)
+    {
+        newnode->next=head;
+        head->prev=newnode;
+        head=newnode;
+        return head;
+    }
+    Node* temp=head;
+    int count=0;
+    while(temp!=nullptr && count<pos-1)
+    {
+        temp=temp->next;
+        count++;
+    }
+    if(temp!=nullptr)
+    {
+        newnode->prev=temp;
+        newnode->next=temp->next;
+        temp->next->prev=newnode;
+        temp->next=newnode;
+    }
+    return head;
+}
+Node* removeHead(Node* head)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    Node* temp=head;
+    head->next->prev=nullptr;
+    head=head->next;
+    delete temp;
+    return head;
+}
+Node* removeEnd(Node* head)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    Node* temp=head;
+    while(temp->next->next!=nullptr)
+    {
+        temp=temp->next;
+    }
+    temp->next=nullptr;
+    return head;
+}
+Node* removeAtPosition(Node* head,int pos)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(pos==1)
+    {
+        Node* temp=head;
+        head->next->prev=nullptr;
+        head=head->next;
+        delete temp;
+        return head;
+    }
+    Node* temp=head;
+    Node* prev=nullptr;
+    int count=1;
+    while(temp!=nullptr && count<pos)
+    {
+        prev=temp;
+        temp=temp->next;
+        count++;
+    }
+    if(temp!=nullptr)
+    {
+        prev->next=temp->next;
+        temp->next->prev=prev;
+    }
+    return head;
+}
+void printList(Node* head)
+{
+    Node* temp=head;
+    while(temp)
+    {
+        cout<<temp->data<<endl;
+        temp=temp->next;
+    }
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int size=sizeof(arr)/sizeof(arr[0]);
+    Node* head=ArrayToLinkedList(arr,size);
+    head=insertAtHead(head,10);
+    head=insertAtEnd(head,50);
+    //head=insertAtPosition(head,15,2);
+    head=removeHead(head);
+    head=removeEnd(head);
+    head=removeAtPosition(head,2);
+    printList(head);
+}
+
+************************************************CIRCULAR LINKED LIST********************************
+#include<iostream>
+using namespace std;
+struct Node
+{
+    int data;
+    Node* next;
+    Node(int val)
+    {
+        data=val;
+        next=nullptr;
+    }
+};
+Node* arrToLinkedList(int arr[],int size)
+{
+    Node* head=new Node(arr[0]);
+    Node* current=head;
+    for(int i=1;i<size;i++)
+    {
+        Node* newnode=new Node(arr[i]);
+        current->next=newnode;
+        current=newnode;
+    }
+    current->next=head;
+    return head;
+}
+Node* insertAtHead(Node* head,int data)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        head=newnode;
+        head->next=newnode;
+        return head;
+    }
+    Node* temp=head;
+    newnode->next=head;
+    while(temp->next!=head)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    head=newnode;
+    return head;
+}
+Node* insertAtEnd(Node* head,int data)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        head=newnode;
+        head->next=newnode;
+        return head;
+    }
+    Node* temp=head;
+    while(temp->next!=head)
+    {
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    newnode->next=head;
+    return head;
+    
+}
+Node* insertAtPosition(Node* head,int data,int pos)
+{
+    Node* newnode=new Node(data);
+    if(head==nullptr)
+    {
+        head=newnode;
+        head->next=newnode;
+        return head;
+    }
+    if(pos==1)
+    {
+        newnode->next=head;
+        Node* temp=head;
+        while(temp->next!=head)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+        head=newnode;
+        return head;
+    }
+    Node* temp=head;
+    int count=1;
+    while(temp->next!=head && count<pos-1)
+    {
+        temp=temp->next;
+        count++;
+    }
+    if(temp->next!=head)
+    {   
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+    return head;
+}
+Node* removeAtHead(Node* head)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(head->next==head)
+    {
+        delete head;
+        return nullptr;
+    }
+    Node* temp=head;
+    while(temp->next!=head)
+    {
+        temp=temp->next;
+    }
+    Node* del1=head;
+    head=head->next;
+    temp->next=head;
+    delete del1;
+    return head;
+}
+Node* removeATEnd(Node* head)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(head->next==head)
+    {
+        delete head;
+        return nullptr;
+    }
+    Node* temp=head;
+    while(temp->next->next!=head)
+    {
+        temp=temp->next;
+    }
+    temp->next=head;
+    return head;
+}
+Node* removeAtPosition(Node* head,int pos)
+{
+    if(head==nullptr)
+    {
+        return nullptr;
+    }
+    if(head->next==head)
+    {
+        delete head;
+        return nullptr;
+    }
+    if(pos==1)
+    {
+        Node* temp=head;
+        while(temp->next!=head)
+        {
+            temp=temp->next;
+        }
+        Node* del1=head;
+        head=head->next;
+        temp->next=head;
+        delete del1;
+        return head;
+    }
+    Node* temp=head;
+    Node* prev=nullptr;
+    int count=1;
+    while(temp->next!=head && count<pos)
+    {
+        prev=temp;
+        temp=temp->next;
+        count++;
+    }
+    if(temp->next!=head)
+    {
+        prev->next=prev->next->next;
+    }
+    return head;
+}
+void printList(Node* head)
+{
+    Node* temp=head;
+    while(temp)
+    {
+        cout<<temp->data<<endl;
+        temp=temp->next;
+        if(temp==head)
+        {
+            break;
+        }
+    }
+}
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    int size=sizeof(arr)/sizeof(arr[0]);
+    Node* head=arrToLinkedList(arr,size);
+    head=insertAtHead(head,10);
+    head=insertAtEnd(head,50);
+    head=insertAtPosition(head,15,3);
+    //head=removeAtHead(head);
+    head=removeATEnd(head);
+    head=removeAtPosition(head,3);
+    printList(head);
+}
