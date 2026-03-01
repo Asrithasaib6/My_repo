@@ -1,0 +1,50 @@
+git branch:
+Whenever a developer wants to create/test a new feature , then developer creates a new local branch , and in the local branch he can do all the experiments and 
+then push the code into the main branch
+
+whenever you have created a new file - then the file is in modified state 
+git status - > file shows in red color.
+
+
+-> To move the file from modified to staging state :  git add .  -> file appears in green color
+
+-> after that we need to commit our changes - > git commit  - m "feat:added new file"
+
+-> after that push -> git push
+
+==================================================================================================================================================
+Whenever you want to merge the changes from our local branch to main branch , we need to raise a pull request and then assign reviewer .
+after approving our changes, we can merge our changes.
+
+==================================================================================================================================================
+git reset (--mixed, --soft , --hard)
+git reset (commit ID) -> changes will be in modified stage -> red color (that means if you want to use again , you need to add and then commit) : By default mixed
+
+git reset -- soft commit_id -> changes will be in staged stage -> this means green color  (you can commit directly
+git reset --hard commit_id = changes no longer exists
+
+====================================================================================================================================================
+
+git commit --ammend:   protects yourself from creating multiple commits
+
+git commit --amend
+
+edit the commit ot else change the commit message
+
+=======================================================================================================================================
+cherry pick:
+git cherry-pick //commit_id
+
+==============================================================================================================
+
+git diff
+
+git diff
+git diff --staged
+==============================================================================================
+
+git log
+git log --oneline
+git log --oneline --decorate
+git log --stat :  how many changes you have added to that particular commit
+git log -p : show the diff
