@@ -1,0 +1,45 @@
+Stack:
+Arrays use LIFO 
+
+Stack can be implemented using
+Arrays(fixed size , contiguos memory)
+LinkedList(dynmaic size , flexible memory)
+
+time complexity:
+ push - 0(1)
+pop - 0(1)
+peek -0(1)
+empty - o(1)
+space complexity. -o(n) , for storing all the elements
+
+real world examples:
+
+undo/redo in text editors
+function calls
+expression evaluation
+
+
+QUEUE:
+It follows FIFO logic
+
+Enqueue: Add an element at the rear.
+
+Dequeue: Remove an element from the front.
+
+Peek/Front: Look at the front element without removing it.
+
+isEmpty: Check if the queue is empty.
+
+isFull (for fixed-size queues): Check if the queue is full.
+
+
+📌 Real-World Use Cases
+Task Scheduling: OS process scheduling uses queues (ready queue, waiting queue).
+
+Printers: Print jobs are queued in order of arrival.
+
+Networking: Packets are queued before transmission.
+
+Customer Service Systems: Calls or requests are handled in the order they arrive.
+
+Breadth-First Search (BFS): Graph traversal uses queues to explore nodes level by level.
