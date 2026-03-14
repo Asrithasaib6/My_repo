@@ -1,0 +1,25 @@
+problems list :
+climbing stairs
+climbing stairs II
+min cost climbing stairs
+
+
+
+Dynamic programming:
+memorization : bottom up (recursion for fibonacci)
+
+tabulation : top down ( same for fibonacci , we will start from base case to the answer what we want )
+
+
+How to find whether the given problem is DP or npt :
+
+count the no of ways / best way / minimum/maximum
+
+shortcut trick:
+
+-> try to represent the problem in terms of index
+-> do all possible stuffs on that index according to the problem statement
+-> if the question says count all the ways -> then sum up all the stuffs
+-> if the question says minimum of all stuffs -> find the minimum
+
+
